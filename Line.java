@@ -1,5 +1,6 @@
 package constants;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Line
@@ -13,11 +14,13 @@ public class Line
 	private String label = "";
 	private String op;
 	private String comment;
+	private int lineNumber;
 	
 	
-	public Line(String instruction)
+	public Line(String instruction, int lineNumber)
 	{
 		instructionWords=instruction;
+		this.lineNumber=lineNumber;
 		this.decode(instruction);
 		this.assemble();
 	}
@@ -27,10 +30,32 @@ public class Line
 		java.lang.reflect.Method method;
 		try
 		{
-		  method = psu.getClass().getMethod(this.op, param1.class, param2.class, ..);
+			if(this.op!="")
+			{
+				method = psu.getClass().getMethod(this.op, ArrayList.class); //psu.op(operands)
+				this.instructionBin = (String) method.invoke(psu, operands);
+			}
 		}
-		catch (SecurityException e) {System.out.println(e);}
-		catch (NoSuchMethodException e) {System.out.println(e);}
+		catch (IllegalAccessException e)
+		{
+			System.out.println("\""+this.op+"\" is not recognized5");
+		}
+		catch (IllegalArgumentException e)
+		{
+			System.out.println("\""+this.op+"\" is not recognized4");
+		}
+		catch (InvocationTargetException e)
+		{
+			System.out.println("\""+this.op+"\" is not recognized3");
+		}
+		catch (SecurityException e)
+		{
+			System.out.println("\""+this.op+"\" is not recognized2");
+		}
+		catch (NoSuchMethodException e)
+		{
+			System.out.println("\""+this.op+"\" is not recognized");
+		}
 	}
 	
 	private void decode(String lin)
@@ -40,26 +65,32 @@ public class Line
 		lin=lin.trim();
 		//"label: op operand,operand ;comment"
 		lin=lin.toLowerCase();
-		if(lin.contains(":"))
-		{
-			linarr[0]=lin.substring(0, lin.indexOf(":"));
-			lin=lin.substring(lin.indexOf(":"));
-			lin=lin.replaceFirst(":","");
-		}
 		if(lin.contains(";"))
 		{
 			linarr[3]=lin.substring(lin.indexOf(";")).replaceFirst(";","");
 			lin=lin.substring(0,lin.indexOf(";"));
 			lin=lin.replaceFirst(";","");
+			lin=lin.trim();
+		}
+		if(lin.contains(":"))
+		{
+			linarr[0]=lin.substring(0, lin.indexOf(":"));
+			lin=lin.substring(lin.indexOf(":"));
+			lin=lin.replaceFirst(":","");
+			lin=lin.trim();
 		}
 		for(String seg:linarr)
 		{
 			seg=seg.trim();
 		}
 		lin=lin.trim();
-		linarr[2]=lin.substring(lin.indexOf(" "));
-		//System.out.println(lin);
-		linarr[1]=lin.substring(0,lin.indexOf(" "));
+		
+		if(!(lin.indexOf(" ")==-1))
+		{
+			linarr[2]=lin.substring(lin.indexOf(" "));
+			//System.out.println(lin);
+			linarr[1]=lin.substring(0,lin.indexOf(" "));
+		}
 		//{"label:", "op", "operand,operand", ";comment"}
 		for(String operand:linarr[2].split(","))
 		{

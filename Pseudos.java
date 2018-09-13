@@ -1,17 +1,20 @@
 package constants;
 
+import java.util.ArrayList;
+
 public class Pseudos
 {
 	private String convertORconstant(String in, int pad)
 	{
 		try
 		{
-			return(toBin(""+Integer.parseInt(in),pad));
+			return toBin(""+Integer.parseInt(in),pad);
 		}
 		catch(NumberFormatException e)
 		{
-			
+			e.printStackTrace();
 		}
+		return convertORconstant(Runner.constants.get(in),16);
 	}
 	public String toBin(String str, int pad)
 	{
@@ -30,94 +33,103 @@ public class Pseudos
 	
 	
 	//aluops
-	public String add(String arg1,String arg2,String arg3)
+	public String add(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"000";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"000";
 	}
-	public String sub(String arg1,String arg2,String arg3)
+	public String sub(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"001";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"001";
 	}
-	public String nand(String arg1,String arg2,String arg3)
+	public String nand(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"010";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"010";
 	}
-	public String and(String arg1,String arg2,String arg3)
+	public String and(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"011";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"011";
 	}
-	public String xor(String arg1,String arg2,String arg3)
+	public String xor(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"100";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"100";
 	}
-	public String LShift(String arg1,String arg2,String arg3)
+	public String LShift(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"101";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"101";
 	}
-	public String RShift(String arg1,String arg2,String arg3)
+	public String RShift(ArrayList<?> in)
 	{
-		return "0000"+convertORconstant(arg1,3)+convertORconstant(arg2,3)+convertORconstant(arg3,3)+"110";
+		return "0000"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1),3)+convertORconstant((String) in.get(2),3)+"110";
 	}
 	
 	
 	
 	
-	public String addi(String arg1,String arg2,String arg3)
+	public String addi(ArrayList<?> in)
 	{
-		return "0001"+convertORconstant(arg1,3)+convertORconstant(arg2, 3)+convertORconstant(arg3, 6);
+		return "0001"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1), 3)+convertORconstant((String) in.get(2), 6);
 	}
-	public String loadImm(String arg1, String arg2)
+	public String load(ArrayList<?> in)
 	{
-		return "0010"+convertORconstant(arg1,3)+convertORconstant(arg2, 9);
+		return "0010"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1), 9);
 	}
 	public String syscall()
 	{
 		return "0011"+"0000"+"0000"+"0000";
 	}
-	public String lw(String arg1,String arg2,String arg3)
+	public String lw(ArrayList<?> in)
 	{
-		return "0100"+convertORconstant(arg1, 3)+convertORconstant(arg2, 3)+convertORconstant(arg3, 6);
+		return "0100"+convertORconstant((String) in.get(0), 3)+convertORconstant((String) in.get(1), 3)+convertORconstant((String) in.get(2), 6);
 	}
-	public String sw(String arg1, String arg2)
+	public String sw(ArrayList<?> in)
 	{
-		return "0101"+"000"+convertORconstant(arg1, 3)+convertORconstant(arg2, 3)+"000";
-	}
-	
-	
-	public String ifgt(String arg1, String arg2)
-	{
-		return "0110"+"000"+convertORconstant(arg1, 3)+convertORconstant(arg2, 3)+"011";
-	}
-	public String iflt(String arg1, String arg2)
-	{
-		return "0110"+"000"+convertORconstant(arg1, 3)+convertORconstant(arg2, 3)+"001";
-	}
-	public String ifeq(String arg1,String arg2)
-	{
-		return "0110"+"000"+convertORconstant(arg1, 3)+convertORconstant(arg2, 3)+"010";
+		return "0101"+"000"+convertORconstant((String) in.get(0), 3)+convertORconstant((String) in.get(1), 3)+"000";
 	}
 	
 	
-	public String jumprel(String arg1)
+	public String jumpifgt(ArrayList<?> in)
 	{
-		return "0111"+"000"+convertORconstant(arg1, 3)+"000000";
+		return "0110"+"000"+convertORconstant((String) in.get(0), 3)+convertORconstant((String) in.get(1), 3)+"011";
 	}
-	public String jumpdir(String arg1)
+	public String jumpiflt(ArrayList<?> in)
 	{
-		return "1000"+"000"+"000"+convertORconstant(arg1, 3)+"000";
+		return "0110"+"000"+convertORconstant((String) in.get(0), 3)+convertORconstant((String) in.get(1), 3)+"001";
 	}
-	public String gpc(String arg1)
+	public String jumpifeq(ArrayList<?> in)
 	{
-		return "1001"+convertORconstant(arg1, 3)+"000"+"000"+"000";
+		return "0110"+"000"+convertORconstant((String) in.get(0), 3)+convertORconstant((String) in.get(1), 3)+"010";
 	}
-	public String deel()
+	
+	
+	public String jumprel(ArrayList<?> in)
+	{
+		return "0111"+"000"+convertORconstant((String) in.get(0), 3)+"000000";
+	}
+	public String jumpdir(ArrayList<?> in)
+	{
+		return "1000"+"000"+"000"+convertORconstant((String) in.get(0), 3)+"000";
+	}
+	public String gpc(ArrayList<?> in)
+	{
+		return "1001"+convertORconstant((String) in.get(0), 3)+"000"+"000"+"000";
+	}
+	public String deel(ArrayList<?> in)
 	{
 		return "1010"+"000"+"000"+"000"+"000";
 	}
 	
 	
-	public String noop()
+	public String noop(ArrayList<?> in)
 	{
 		return "0000000000000000";
+	}
+	public String fill(ArrayList<?> in)
+	{
+		return convertORconstant((String) in.get(0), 16);
+	}
+	public void constant(ArrayList<?> in)
+	{
+		Runner.constants.put((String) in.get(0), (String) in.get(1));
+		System.out.println("Initialized constant:" +(String) in.get(0)+", "+ (String) in.get(1));
 	}
 }

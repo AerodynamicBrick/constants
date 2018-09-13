@@ -18,16 +18,7 @@ public class Runner
 	private static ArrayList<Line> lineArray = new ArrayList<Line>();
 	
 	//map of constants
-	private static Map<String, String> constants = new HashMap<String, String>();
-	
-	public static void addLine(Line lin)
-	{
-		lineArray.add(lin);
-	}
-	public static int lineArrayLen()
-	{
-		return lineArray.size();
-	}
+	public static Map<String, String> constants = new HashMap<String, String>();
 	
 	public static void main(String[] args)
 	{
@@ -74,10 +65,12 @@ public class Runner
 			
 			
 			Line temp;
+			int i=1;
 			for(String line:inArray)
 			{
-				temp = new Line(line);
+				temp = new Line(line,i);
 				lineArray.add(temp);
+				i++;
 			}
 			
 			//assemble and populate all lines
