@@ -15,6 +15,7 @@ public class Line
 	private String op;
 	private String comment;
 	private int lineNumber;
+	private boolean isRecognisedOp;
 	
 	
 	public Line(String instruction, int lineNumber)
@@ -24,7 +25,7 @@ public class Line
 		this.decode(instruction);
 		this.assemble();
 	}
-	
+
 	private void assemble()
 	{
 		java.lang.reflect.Method method;
@@ -34,30 +35,14 @@ public class Line
 			{
 				method = psu.getClass().getMethod(this.op, ArrayList.class); //psu.op(operands)
 				this.instructionBin = (String) method.invoke(psu, operands);
+				
+				//if you didn't catch by here than the op is not recognised.
+				isRecognisedOp=true;
 			}
 		}
-		catch (IllegalAccessException e)
-		{
-			System.out.println("\""+this.op+"\" is not recognized5");
-		}
-		catch (IllegalArgumentException e)
-		{
-			System.out.println("\""+this.op+"\" is not recognized4");
-		}
-		catch (InvocationTargetException e)
-		{
-			System.out.println("\""+this.op+"\" is not recognized3");
-		}
-		catch (SecurityException e)
-		{
-			System.out.println("\""+this.op+"\" is not recognized2");
-		}
-		catch (NoSuchMethodException e)
-		{
-			System.out.println("\""+this.op+"\" is not recognized");
-		}
+		catch (Exception e) {isRecognisedOp=false;}
 	}
-	
+
 	private void decode(String lin)
 	{
 		String linarr[] = {"","","",""};
@@ -84,7 +69,7 @@ public class Line
 			seg=seg.trim();
 		}
 		lin=lin.trim();
-		
+
 		if(!(lin.indexOf(" ")==-1))
 		{
 			linarr[2]=lin.substring(lin.indexOf(" "));
@@ -113,13 +98,11 @@ public class Line
 	public String toString()
 	{
 		String out="";
-		if(this.label!="") {out+="label: "+this.label;}
-		if(out!="") {out+=", ";}
-		if(this.op!="") {out+="op: "+this.op;}
-		if(out!="") {out+=", ";}
-		if(!this.operands.isEmpty()) {out+="operands: "+this.operands;}
-		if(out!="") {out+=", ";}
-		if(this.comment!="") {out+="comment: "+this.comment;}
+		if(this.label!="") {out+=" label: "+this.label;}
+		if(this.op!="") {out+=" op: "+this.op;}
+		if(!this.operands.isEmpty()) {out+=" operands: "+this.operands;}
+		if(this.comment!="") {out+=" comment: "+this.comment;}
+		if(this.isRecognisedOp) {out+= ", recognised: "+isRecognisedOp;}
 		return out;
 	}
 }

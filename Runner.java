@@ -68,8 +68,15 @@ public class Runner
 			int i=1;
 			for(String line:inArray)
 			{
+				try
+				{
 				temp = new Line(line,i);
 				lineArray.add(temp);
+				}
+				catch(Exception e)
+				{
+					System.out.println("test2");
+				}
 				i++;
 			}
 			
