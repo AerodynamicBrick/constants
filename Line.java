@@ -36,7 +36,7 @@ public class Line
 				method = psu.getClass().getMethod(this.op, ArrayList.class); //psu.op(operands)
 				this.instructionBin = (String) method.invoke(psu, operands);
 				
-				//if you didn't catch by here than the op is not recognised.
+				//if you didn't catch by here than the op is not recognized.
 				isRecognisedOp=true;
 			}
 		}
@@ -102,7 +102,7 @@ public class Line
 		if(this.op!="") {out+=" op: "+this.op;}
 		if(!this.operands.isEmpty()) {out+=" operands: "+this.operands;}
 		if(this.comment!="") {out+=" comment: "+this.comment;}
-		if(this.isRecognisedOp) {out+= ", recognised: "+isRecognisedOp;}
+		if(!this.isRecognisedOp) {out+= ", recognised: "+isRecognisedOp;}
 		return out;
 	}
 }
