@@ -68,24 +68,23 @@ public class Runner
 			int i=1;
 			for(String line:inArray)
 			{
-				try
-				{
 				temp = new Line(line,i);
 				lineArray.add(temp);
-				}
-				catch(Exception e)
-				{
-					System.out.println("test2");
-				}
 				i++;
 			}
 			
-			//assemble and populate all lines
+			//print our info
 			for(Line line:lineArray)
 			{
 				System.out.println(line.getWords());
 				System.out.println(line);
 				System.out.println("\t"+line.getBin());
+			}
+			
+			//output errors
+			for(Line line:lineArray)
+			{
+				if(!line.isRecognized()){System.out.println("[Error] \""+line.getOp()+"\" Is not a recognised operation."+line.getLineNum());}
 			}
 		}
 		catch (FileNotFoundException e)

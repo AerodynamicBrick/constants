@@ -87,6 +87,32 @@ public class Line
 		
 		this.comment=linarr[3];
 	}
+	
+	
+	public String getOp()
+	{
+		return op;
+	}
+	public String getLabel()
+	{
+		return label;
+	}
+	public String getComment()
+	{
+		return comment;
+	}
+	public ArrayList<String> getOperands()
+	{
+		return operands;
+	}
+	public boolean isRecognized()
+	{
+		return isRecognisedOp;
+	}
+	public int getLineNum()
+	{
+		return lineNumber;
+	}
 	public String getWords()
 	{
 		return instructionWords;
