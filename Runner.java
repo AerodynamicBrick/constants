@@ -56,10 +56,7 @@ public class Runner
 			while(infile.hasNextLine())
 			{
 				nxtln=infile.nextLine().trim();
-				if(!nxtln.isEmpty())
-				{
-					inArray.add(nxtln);
-				}
+				inArray.add(nxtln);
 			}
 			infile.close();
 			
@@ -72,7 +69,7 @@ public class Runner
 				lineArray.add(temp);
 				i++;
 			}
-			
+			System.out.println("\n\nMass Prints:");
 			//print our info
 			for(Line line:lineArray)
 			{
@@ -80,11 +77,11 @@ public class Runner
 				System.out.println(line);
 				System.out.println("\t"+line.getBin());
 			}
-			
+			System.out.println("\n\nErrors:");
 			//output errors
 			for(Line line:lineArray)
 			{
-				if(!line.isRecognized()){System.out.println("[Error] \""+line.getOp()+"\" Is not a recognised operation."+line.getLineNum());}
+				if(!line.isRecognized()&&!line.getOp().equals("")){System.out.println("[Error] \""+line.getOp()+"\" Is not a recognised operation. "+line.getLineNum());}
 			}
 		}
 		catch (FileNotFoundException e)

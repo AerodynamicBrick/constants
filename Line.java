@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Line
 {
 	Pseudos psu = new Pseudos();
-	
+
 	private String instructionWords="";
 	private String instructionBin="";
-	
+
 	private ArrayList<String> operands = new ArrayList<String>();
 	private String label = "";
 	private String op;
 	private String comment;
-	private int lineNumber;
+	private int lineNumber; //this is the real line number. including comments and empty lines.
 	private boolean isRecognisedOp;
-	
-	
+
+
 	public Line(String instruction, int lineNumber)
 	{
 		instructionWords=instruction;
@@ -124,10 +124,11 @@ public class Line
 	public String toString()
 	{
 		String out="";
-		if(this.label!="") {out+=" label: "+this.label;}
-		if(this.op!="") {out+=" op: "+this.op;}
-		if(!this.operands.isEmpty()) {out+=" operands: "+this.operands;}
-		if(this.comment!="") {out+=" comment: "+this.comment;}
+		out+="Ln: "+lineNumber;
+		if(this.label!="") {out+=", label: "+this.label;}
+		if(this.op!="") {out+=", op: "+this.op;}
+		if(!this.operands.isEmpty()) {out+=", operands: "+this.operands;}
+		if(this.comment!="") {out+=", comment: \""+this.comment+"\"";}
 		if(!this.isRecognisedOp) {out+= ", recognised: "+isRecognisedOp;}
 		return out;
 	}

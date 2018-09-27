@@ -10,11 +10,26 @@ public class Pseudos
 		{
 			return toBin(""+Integer.parseInt(in),pad);
 		}
-		catch(NumberFormatException e)
+		catch(NumberFormatException e) //can't be converted to bin, must be constant's name
 		{
-			e.printStackTrace();
+			if(Runner.constants.containsKey(in)) //if there is a constant by that name
+			{
+				String constantValue=Runner.constants.get(in);
+				if(Integer.parseInt(constantValue)>(2^pad)) //if that constant is within the maximum size
+				{
+					return toBin(constantValue,pad);
+				}
+				else
+				{
+					System.out.println("[Error] Requested constant exceeded len expected by imm.");
+				}
+			}
+			else
+			{
+				System.out.println("[Error] Not a constant. Returning 0.");
+			}
 		}
-		return convertORconstant(Runner.constants.get(in),16);
+		return this.toBin("0", pad);
 	}
 	public String toBin(String str, int pad)
 	{
