@@ -31,17 +31,18 @@ public class Line
 		java.lang.reflect.Method method;
 		try
 		{
-			//if(this.op.equals("constant")) {psu.constant(operands);}
-			if(!this.op.equals(""))
+			if(this.op!="")
 			{
 				method = psu.getClass().getMethod(this.op, ArrayList.class); //psu.op(operands)
 				this.instructionBin = (String) method.invoke(psu, operands);
+				
 				//if you didn't catch by here than the op is not recognized.
 				isRecognisedOp=true;
 			}
 		}
-		catch (Exception e){isRecognisedOp=false;}
+		catch (Exception e) {isRecognisedOp=false;}
 	}
+
 	private void decode(String lin)
 	{
 		String linarr[] = {"","","",""};
