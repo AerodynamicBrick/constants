@@ -15,7 +15,7 @@ public class Pseudos
 			if(Runner.constants.containsKey(in)) //if there is a constant by that name
 			{
 				String constantValue=Runner.constants.get(in);
-				if(Integer.parseInt(constantValue)<(2^pad)) //if that constant is within the maximum size
+				if(Integer.parseInt(constantValue)>(2^pad)) //if that constant is within the maximum size
 				{
 					return toBin(constantValue,pad);
 				}
