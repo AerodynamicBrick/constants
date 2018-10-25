@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Pseudos
 {
+	//helpers
 	private String convertORconstant(String in, int pad)
 	{
 		try
@@ -45,7 +46,9 @@ public class Pseudos
 		}
 		return String.format("%"+pad+"s", result.reverse().toString()).replace(" ", "0");
 	}
-	
+	public boolean isNumeric(String s) {  
+	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+	}  
 	
 	//aluops
 	public String add(ArrayList<?> in)
@@ -142,9 +145,68 @@ public class Pseudos
 	{
 		return convertORconstant((String) in.get(0), 16);
 	}
-	public void constant(ArrayList<?> in)
+	
+	
+	//the complicated bits
+	public String constant(ArrayList<?> in)
 	{
 		Runner.constants.put((String) in.get(0), (String) in.get(1));
 		System.out.println("Initialized constant:" +(String) in.get(0)+", "+ (String) in.get(1));
+		return "";
+	}
+	public String Goto(ArrayList<?> in)//Goto is capitalized because "goto" is a defined name
+	{
+		//case 1: goto $#
+		//case 2: goto label
+		//case 3: goto constant
+		//case 4: goto #
+
+		//case 1
+		if(((String) in.get(1)).startsWith("$")) //if it's a pointer
+		{
+			String inbin=((String) in.get(0)).substring(1);
+			
+			//syscall push
+			//*inbin
+			//load previous
+			//jumpdir loaded_previous
+			//edit pushed to line to load at
+			//pop
+			
+		}
+		//case 2
+		else if(Runner.labels.containsKey(in.get(1))) //if it's an existing label
+		{
+			//syscall push
+			//get pc
+			//jumpdir pc+-difference
+			//edit pushed to line to load at
+			//pop
+		}
+		//case 3
+		else if(Runner.constants.containsKey(in.get(1)))
+		{
+			//syscall push
+			//get pc
+			//jumpdir pc+-difference
+			//edit pushed to line to load at
+			//pop
+		}
+		//case 4
+		else if(((String) in.get(1)).matches("\\d+"))
+		{
+			//same as case 1
+			
+			//syscall push
+			//*inbin
+			//load previous
+			//jumpdir loaded_previous
+			//edit pushed to line to load at
+			//pop
+		}
+		else {System.out.println("Syntax error on goto.");}
+		//if you made it here you had a syntax error.
+		System.out.println("syntax error!");
+		return "";
 	}
 }

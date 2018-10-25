@@ -121,6 +121,13 @@ public class Line
 	{
 		return instructionBin;
 	}
+	public String getHex()
+	{
+		if(this.getBin().equals("")){return "";}
+		int decimal = Integer.parseInt(this.getBin(),2);
+		String hex = Integer.toString(decimal,16);
+		return hex;
+	}
 	public String toString()
 	{
 		String out="";
