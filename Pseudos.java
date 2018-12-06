@@ -13,9 +13,9 @@ public class Pseudos
 		}
 		catch(NumberFormatException e) //can't be converted to bin, must be constant's name
 		{
-			if(Runner.constants.containsKey(in)) //if there is a constant by that name
+			if(RunnerFinal.constants.containsKey(in)) //if there is a constant by that name
 			{
-				String constantValue=Runner.constants.get(in);
+				String constantValue=RunnerFinal.constants.get(in);
 				if(Integer.parseInt(constantValue)<(2^pad)) //if that constant is within the maximum size
 				{
 					return toBin(constantValue,pad);
@@ -37,11 +37,9 @@ public class Pseudos
 		int no = 0;
 		no = Integer.parseInt(str);
 		StringBuilder result = new StringBuilder();
-		int i = 0;
 		while (no > 0)
 		{
 			result.append(no%2);
-			i++;
 			no = no/2;
 		}
 		return String.format("%"+pad+"s", result.reverse().toString()).replace(" ", "0");
@@ -91,9 +89,9 @@ public class Pseudos
 	{
 		return "0010"+convertORconstant((String) in.get(0),3)+convertORconstant((String) in.get(1), 9);
 	}
-	public String syscall()
+	public String syscall(ArrayList<?> in)
 	{
-		return "0011"+"0000"+"0000"+"0000";
+		return "0011"+"0000"+"00"+ convertORconstant((String) in.get(0), 6);
 	}
 	public String lw(ArrayList<?> in)
 	{
@@ -150,7 +148,7 @@ public class Pseudos
 	//the complicated bits
 	public String constant(ArrayList<?> in)
 	{
-		Runner.constants.put((String) in.get(0), (String) in.get(1));
+		RunnerFinal.constants.put((String) in.get(0), (String) in.get(1));
 		System.out.println("Initialized constant:" +(String) in.get(0)+", "+ (String) in.get(1));
 		return "";
 	}
@@ -164,27 +162,24 @@ public class Pseudos
 		//case 1
 		if(((String) in.get(1)).startsWith("$")) //if it's a pointer
 		{
-			String inbin=((String) in.get(0)).substring(1);
+			//String inbin=((String) in.get(0)).substring(1);
 			
 			//syscall push
 			//*inbin
 			//load previous
-			//jumpdir loaded_previous
-			//edit pushed to line to load at
+			//edit pushed to line to load at new loc
 			//pop
 			
 		}
 		//case 2
-		else if(Runner.labels.containsKey(in.get(1))) //if it's an existing label
+		else if(RunnerFinal.labels.containsKey(in.get(1))) //if it's an existing label
 		{
-			//syscall push
-			//get pc
-			//jumpdir pc+-difference
-			//edit pushed to line to load at
-			//pop
+			//make this use push syscalls later
+			
+			//error if too big for jump rel
 		}
 		//case 3
-		else if(Runner.constants.containsKey(in.get(1)))
+		else if(RunnerFinal.constants.containsKey(in.get(1)))
 		{
 			//syscall push
 			//get pc

@@ -12,9 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import asmblr.Preprocessing;
-
-public class Runner
+public class RunnerFinal
 {
 	//array of lines as strings
 	private static ArrayList<String> inArray = new ArrayList<String>();
@@ -31,11 +29,12 @@ public class Runner
 	public static void main(String[] args)
 	{
 		Scanner in = new Scanner(System.in);
-		Preprocessing halp = new Preprocessing();
 		
 		System.out.println("[Status] Running!");
-		System.out.println("Input file full directory and name required.");
+		System.out.println("Input file full directory and name.");
+		
 		String filename=in.nextLine();
+		
 		Boolean useDefaultFileName=false;
 		if(filename.equals(""))
 			{
@@ -117,7 +116,7 @@ public class Runner
 
 
 			File outfile = new File(filename);
-			if(outfile.equals("")){System.out.println("Using default name. ");}
+			if(filename.equals("")){System.out.println("Using default name. ");}
 			FileOutputStream outfileStream = new FileOutputStream(outfile);
 			BufferedWriter bufOfWrit = new BufferedWriter(new OutputStreamWriter(outfileStream));
 			
@@ -193,6 +192,7 @@ public class Runner
 			System.out.println("[Error] Could not find the file: "+filename);
 			e.printStackTrace();
 		}
+		in.close();
 	}
 		
 }
